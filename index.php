@@ -8,24 +8,39 @@ require 'db_conn.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>To-Do List</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="View/css/style.css">
 </head>
 <body>
+    
     <div class="main-section">
        <div class="add-section">
-          <form action="app/add.php" method="POST" autocomplete="off">
+          <form action="Controller/add.php" method="POST" autocomplete="off">
              <?php if(isset($_GET['mess']) && $_GET['mess'] == 'error'){ ?>
                 <input type="text" 
                      name="title" 
                      style="border-color: #ff6666"
                      placeholder="This field is required" />
-              <button type="submit">Add &nbsp; <span>&#43;</span></button>
+                <input type="text" 
+                     name="description" 
+                     placeholder="Describe your task" />
+                <select name="priority">
+                    <option value="High">High</option>
+                    <option value="Low">Low</option>
+                </select>
+                <button type="submit">Add &nbsp; <span>&#43;</span></button>
 
              <?php }else{ ?>
-              <input type="text" 
+                <input type="text" 
                      name="title" 
                      placeholder="What do you need to do?" />
-              <button type="submit">Add &nbsp; <span>&#43;</span></button>
+                <input type="text" 
+                     name="description"
+                     placeholder="Describe your task" />
+                <select name="priority">
+                    <option value="High">High</option>
+                    <option value="Low">Low</option>
+                </select>
+                <button type="submit">Add &nbsp; <span>&#43;</span></button>
              <?php } ?>
           </form>
        </div>
@@ -36,8 +51,8 @@ require 'db_conn.php';
             <?php if($todos->rowCount() <= 0){ ?>
                 <div class="todo-item">
                     <div class="empty">
-                        <img src="./images/img.png" width="100%" />
-                        <img src="./images/cir.gif" width="80px">
+                        <img src="./view/images/img.png" width="100%" />
+                        <img src="./View/images/cir.gif" width="80px">
                     </div>
                 </div>
             <?php } ?>
@@ -46,6 +61,8 @@ require 'db_conn.php';
                 <div class="todo-item">
                     <span id="<?php echo $todo['id']; ?>"
                           class="remove-to-do">x</span>
+                    <span id="<?php echo $todo['id']; ?>"  
+                        class="update-to-do">✔</span>
                     <?php if($todo['checked']){ ?> 
                         <input type="checkbox"
                                class="check-box"
@@ -58,8 +75,19 @@ require 'db_conn.php';
                                class="check-box" />
                         <h2><?php echo $todo['title'] ?></h2>
                     <?php } ?>
+                    <p><?php echo $todo['description'] ?></p>
                     <br>
                     <small>created: <?php echo $todo['date_time'] ?></small> 
+                    <small>priority: <?php 
+                                        if ($todo['priority'] === 1) {
+                                            echo 'High'; 
+                                        } else {
+                                            echo 'Low';
+                                        }
+                                        
+                                    
+                                    ?>
+                    </small>
                 </div>
             <?php } ?>
        </div>
@@ -72,7 +100,7 @@ require 'db_conn.php';
             $('.remove-to-do').click(function(){
                 const id = $(this).attr('id');
                 
-                $.post("app/remove.php", 
+                $.post("Controller/remove.php", 
                       {
                           id: id
                       },
@@ -87,7 +115,7 @@ require 'db_conn.php';
             $(".check-box").click(function(e){
                 const id = $(this).attr('data-todo-id');
                 
-                $.post('app/check.php', 
+                $.post('Controller/check.php', 
                       {
                           id: id
                       },

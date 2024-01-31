@@ -1,4 +1,5 @@
 body {
+    background-image: url('../images/backg.jpg');
     background: #319889;
   }
   
@@ -19,18 +20,18 @@ body {
   
   .add-section {
     width: 100%;
-    background: #fff;
+    background: #968e8e;
     margin: 0px auto;
     padding: 10px;
     border-radius: 5px;
   }
   
-  .add-section input {
+  .add-section input, select {
     display: block;
     width: 95%;
     height: 40px;
     margin: 10px auto;
-    border: 2px solid #ccc;
+    border: 2px solid #fffdfd;
     font-size: 16px;
     border-radius: 5px;
     padding: 0px 5px;
@@ -43,8 +44,8 @@ body {
     margin: 0px auto;
     border: none;
     outline: none;
-    background: #0088FF;
-    color: #fff;
+    background: #90c6f5;
+    color: #cea8a8;
     font-family: sans-serif;
     font-size: 16px;
     border-radius: 5px;
@@ -52,7 +53,7 @@ body {
   }
   
   .add-section button:hover {
-    box-shadow: 0 2px 2px 0 #ccc, 0 2px 3px 0 #ccc;
+    box-shadow: 0 2px 2px 0 #b89b9b, 0 2px 3px 0 #ccc;
     opacity: 0.7;
   }
   
@@ -107,6 +108,26 @@ body {
     font-size: 14px;
     font-family: sans-serif;
   }
+
+  .update-to-do {
+    display: block;
+    float: right;
+    width: 20px;
+    height: 20px;
+    font-family: sans-serif;
+    color: rgb(139, 97, 93);
+    text-decoration: none;
+    text-align: right;
+    padding: 0px 5px 8px 0px;
+    border-radius: 50%;
+    transition: background 1s;
+    cursor: pointer;
+  }
+  
+  .update-to-do:hover {
+    background: rgb(139, 97, 93);
+    color: #fff;
+  }
   
   .remove-to-do {
     display: block;
@@ -143,3 +164,12 @@ body {
     text-align: center;
     color: #cccc;
   }
+
+  .todo-item p {
+    background-color: #f2f2f2; 
+    border-radius: 5px; 
+    padding: 10px; 
+    margin: 10px 0; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    color: grey;
+}
