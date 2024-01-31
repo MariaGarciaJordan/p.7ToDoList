@@ -45,9 +45,22 @@ require 'db_conn.php';
           </form>
        </div>
        <?php 
-          $todos = $conn->query("SELECT * FROM todos ORDER BY id DESC");
+          $order = isset($_GET['order']) ? $_GET['order'] : 'id';
+          if ($order === 'priority') {
+              $todos = $conn->query("SELECT * FROM todos ORDER BY priority DESC");
+          } elseif ($order === 'date') {
+              $todos = $conn->query("SELECT * FROM todos ORDER BY date_time ASC, title ASC");
+          } else {
+              $todos = $conn->query("SELECT * FROM todos ORDER BY id DESC");
+          }
+          
        ?>
        <div class="show-todo-section">
+       <form action="index.php" method="GET">
+           <button type="submit" name="order" value="priority">Order by Priority</button>
+           <button type="submit" name="order" value="date">Order by Date</button>
+       </form>
+
             <?php if ($todos->rowCount() <= 0) { ?>
                 <div class="todo-item">
                     <div class="empty">
