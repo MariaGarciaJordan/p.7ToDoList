@@ -1,3 +1,6 @@
+<?php
+require 'db_conn.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,6 +20,8 @@
             </form>
         </div>
         <div class="show-todo-section">
+        <?php
+        ?>
         <div class="todo-item">
             <input type="checkbox">
             <h2>This is</h2>

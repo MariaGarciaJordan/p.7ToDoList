@@ -1,0 +1,15 @@
+{
+    "name": "maymu/p.7to-do-list",
+    "autoload": {
+        "psr-4": {
+            "Maymu\\P7toDoList\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "maymurph",
+            "email": "airam.g.jordan@gmail.com"
+        }
+    ],
+    "require": {}
+}
