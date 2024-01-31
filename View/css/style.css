@@ -110,7 +110,7 @@ body {
   }
 
   .update-to-do {
-    display: block;
+    display: none;
     float: right;
     width: 20px;
     height: 20px;

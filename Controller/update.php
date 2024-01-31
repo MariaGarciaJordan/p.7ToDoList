@@ -1,18 +1,17 @@
 <?php
 
-if (isset($_POST['title'])) {
-    
+if(isset($_POST['id'], $_POST['title'], $_POST['description'])) {
     require '../db_conn.php';
 
+    $id = $_POST['id'];
     $title = $_POST['title'];
     $description = $_POST['description'];
-    $priority = $_POST['priority'];
 
     if (empty($title)) {
         header("Location: ../index.php?mess=error");
     } else {
-        $stmt = $conn->prepare("INSERT INTO todos(title, description, priority) VALUE(?, ?, ?)");
-        $res = $stmt->execute([$title, $description, $priority]);
+        $stmt = $conn->prepare("UPDATE todos SET title = ?, description = ? WHERE id = ?");
+        $res = $stmt->execute([$title, $description, $id]);
 
         if ($res) {
             header("Location: ../index.php?mess=success"); 

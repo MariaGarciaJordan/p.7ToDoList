@@ -15,7 +15,7 @@ require 'db_conn.php';
     <div class="main-section">
        <div class="add-section">
           <form action="Controller/add.php" method="POST" autocomplete="off">
-             <?php if(isset($_GET['mess']) && $_GET['mess'] == 'error'){ ?>
+             <?php if(isset($_GET['mess']) && $_GET['mess'] == 'error') { ?>
                 <input type="text" 
                      name="title" 
                      style="border-color: #ff6666"
@@ -29,7 +29,7 @@ require 'db_conn.php';
                 </select>
                 <button type="submit">Add &nbsp; <span>&#43;</span></button>
 
-             <?php }else{ ?>
+             <?php } else { ?>
                 <input type="text" 
                      name="title" 
                      placeholder="What do you need to do?" />
@@ -37,8 +37,8 @@ require 'db_conn.php';
                      name="description"
                      placeholder="Describe your task" />
                 <select name="priority">
-                    <option value="High">High</option>
-                    <option value="Low">Low</option>
+                    <option value="1">High</option>
+                    <option value="0">Low</option>
                 </select>
                 <button type="submit">Add &nbsp; <span>&#43;</span></button>
              <?php } ?>
@@ -48,7 +48,7 @@ require 'db_conn.php';
           $todos = $conn->query("SELECT * FROM todos ORDER BY id DESC");
        ?>
        <div class="show-todo-section">
-            <?php if($todos->rowCount() <= 0){ ?>
+            <?php if ($todos->rowCount() <= 0) { ?>
                 <div class="todo-item">
                     <div class="empty">
                         <img src="./view/images/img.png" width="100%" />
@@ -57,24 +57,26 @@ require 'db_conn.php';
                 </div>
             <?php } ?>
 
-            <?php while($todo = $todos->fetch(PDO::FETCH_ASSOC)) { ?>
-                <div class="todo-item">
+            <?php while ($todo = $todos->fetch(PDO::FETCH_ASSOC)) { ?>
+                <div class="todo-item" <?php 
+                                            if ($todo['checked'] == 1) {
+                                                echo 'style="background-color: rgb(198, 239, 199);"';
+                                            }
+                                        ?>>
                     <span id="<?php echo $todo['id']; ?>"
                           class="remove-to-do">x</span>
                     <span id="<?php echo $todo['id']; ?>"  
                         class="update-to-do">✔</span>
-                    <?php if($todo['checked']){ ?> 
-                        <input type="checkbox"
-                               class="check-box"
-                               data-todo-id ="<?php echo $todo['id']; ?>"
-                               checked />
-                        <h2 class="checked"><?php echo $todo['title'] ?></h2>
-                    <?php }else { ?>
-                        <input type="checkbox"
-                               data-todo-id ="<?php echo $todo['id']; ?>"
-                               class="check-box" />
-                        <h2><?php echo $todo['title'] ?></h2>
-                    <?php } ?>
+                    
+                    <input type="checkbox" <?php 
+                                                if ($todo['checked'] == 1) {
+                                                    echo 'style="display: none;"';
+                                                }
+                                            ?>
+                            data-todo-id ="<?php echo $todo['id']; ?>"
+                            class="check-box" />
+                    <h2><?php echo $todo['title'] ?></h2>
+                    
                     <p><?php echo $todo['description'] ?></p>
                     <br>
                     <small>created: <?php echo $todo['date_time'] ?></small> 
@@ -84,10 +86,10 @@ require 'db_conn.php';
                                         } else {
                                             echo 'Low';
                                         }
-                                        
-                                    
                                     ?>
                     </small>
+                    <br>
+                    <button class="complete-to-do" id="<?php echo $todo['id']; ?>">Done!</button>
                 </div>
             <?php } ?>
        </div>
@@ -97,6 +99,10 @@ require 'db_conn.php';
 
     <script>
         $(document).ready(function(){
+            var originalTitle = '';
+            var originalDescription = '';
+            var currentCheckBox = null;
+
             $('.remove-to-do').click(function(){
                 const id = $(this).attr('id');
                 
@@ -114,23 +120,71 @@ require 'db_conn.php';
 
             $(".check-box").click(function(e){
                 const id = $(this).attr('data-todo-id');
-                
-                $.post('Controller/check.php', 
-                      {
-                          id: id
-                      },
-                      (data) => {
-                          if(data != 'error'){
-                              const h2 = $(this).next();
-                              if(data === '1'){
-                                  h2.removeClass('checked');
-                              }else {
-                                  h2.addClass('checked');
-                              }
-                          }
-                      }
+                const h2 = $(this).next();
+                const p = h2.next();
+                const updateToDo = $(this).siblings('.update-to-do');
+
+                if (currentCheckBox) {
+                    currentCheckBox.next().text(originalTitle);
+                    currentCheckBox.next().next().text(originalDescription);
+                    currentCheckBox.prop('checked', false);
+                    currentCheckBox.siblings('.update-to-do').hide();
+                }
+
+                if ($(this).is(':checked')) {
+                    originalTitle = h2.text();
+                    originalDescription = p.text();
+
+                    h2.html('<input type="text" id="titleInput" value="' + originalTitle + '">');
+                    p.html('<input type="text" id="descriptionInput" value="' + originalDescription + '">');
+
+                    updateToDo.show();
+
+                    currentCheckBox = $(this);
+                } else {
+                    h2.text(originalTitle);
+                    p.text(originalDescription);
+
+                    currentCheckBox = null;
+                }
+            });
+
+            $(".update-to-do").click(function(e){
+                const id = $(this).attr('id');
+                const title = $('#titleInput').val();
+                const description = $('#descriptionInput').val();
+
+                $.post('Controller/update.php', 
+                    {
+                        id: id,
+                        title: title,
+                        description: description
+                    },
+                    (data) => {
+                        if(data != 'error'){
+                            location.reload(); 
+                        }
+                    }
+                );
+                $('.check-box').not(this).prop('checked', false);
+            });
+
+            $(".complete-to-do").click(function(e){
+                const id = $(this).attr('id');
+
+                $.post('Controller/complete.php', 
+                    {
+                        id: id
+                    },
+                    (data) => {
+                        if(data != 'error'){
+                            $(this).parent().css('background-color', '#c6efc7');
+                            $(this).siblings('.check-box').hide();
+                        }
+                    }
                 );
             });
+
         });
     </script>
 </body>
