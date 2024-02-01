@@ -11,7 +11,7 @@ require 'db_conn.php';
     <link rel="stylesheet" href="View/css/style.css">
 </head>
 <body>
-    
+   
     <div class="main-section">
        <div class="add-section">
           <form action="Controller/add.php" method="POST" autocomplete="off">
