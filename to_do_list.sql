@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Mar 01, 2020 at 06:55 AM
--- Server version: 10.4.6-MariaDB
--- PHP Version: 7.3.9
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 04-02-2024 a las 17:35:29
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,41 +18,43 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `to_do_list`
+-- Base de datos: `to_do_list`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `todos`
+-- Estructura de tabla para la tabla `todos`
 --
 
 CREATE TABLE `todos` (
   `id` int(11) NOT NULL,
   `title` text NOT NULL,
   `date_time` datetime NOT NULL DEFAULT current_timestamp(),
-  `checked` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `checked` tinyint(1) NOT NULL DEFAULT 0,
+  `priority` int(11) NOT NULL DEFAULT 1,
+  `description` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Indexes for dumped tables
+-- Índices para tablas volcadas
 --
 
 --
--- Indexes for table `todos`
+-- Indices de la tabla `todos`
 --
 ALTER TABLE `todos`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT for table `todos`
+-- AUTO_INCREMENT de la tabla `todos`
 --
 ALTER TABLE `todos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
