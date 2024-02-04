@@ -70,7 +70,7 @@ require 'Controller/db_conn.php';
             <?php if ($todos->rowCount() <= 0) { ?>
                 <div class="todo-item">
                     <div class="empty">
-                        <img src="./view/images/img.png" width="100%" />
+                        <img src="./View/images/img.png" width="100%" />
                         <img src="./View/images/cir.gif" width="80px">
                     </div>
                 </div>
