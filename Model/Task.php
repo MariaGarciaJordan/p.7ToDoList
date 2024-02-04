@@ -2,11 +2,8 @@
 
 class Task 
 {
-    private $id;
     private $title;
     private $description;
-    private $createDate;
-    private $checked;
     private $priority;
 
     public function __construct($title, $description, $priority)
@@ -14,16 +11,6 @@ class Task
         $this->title = $title;
         $this->description = $description;
         $this->priority = $priority;
-    }
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function getCreateDate()
-    {
-        return $this->createDate;
     }
 
     public function getTitle() 
@@ -44,16 +31,6 @@ class Task
     public function setDescription($description) 
     {
         $this->description = $description;
-    }
-
-    public function getChecked() 
-    {
-        return $this->checked;
-    }
-
-    public function setChecked($checked) 
-    {
-        $this->checked = $checked;
     }
 
     public function getPriority() 
