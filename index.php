@@ -1,5 +1,5 @@
 <?php 
-require 'db_conn.php';
+require 'Controller/db_conn.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -60,9 +60,9 @@ require 'db_conn.php';
         ?>
        <div class="show-todo-section">
        <form action="index.php" method="GET">
-           <button type="submit" name="order" value="priority">Order by Priority</button>
-           <button type="submit" name="order" value="date">Order by Date</button>
-           <button type="submit" name="order" value="completed">Show Completed</button>
+            <button type="submit" name="order" value="priority">Order by Priority</button>
+            <button type="submit" name="order" value="date">Order by Date</button>
+            <button type="submit" name="order" value="completed">Show Completed</button>
             <button type="submit" name="order" value="incomplete">Show Incomplete</button>
 
        </form>

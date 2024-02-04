@@ -1,7 +1,7 @@
 <?php
 
 if (isset($_POST['id'])) {
-    require '../db_conn.php';
+    require './db_conn.php';
 
     $id = $_POST['id'];
 

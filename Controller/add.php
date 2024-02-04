@@ -4,7 +4,7 @@ require '../Model/Task.php';
 
 if (isset($_POST['title'])) {
     
-    require '../db_conn.php';
+    require './db_conn.php';
 
     $title = $_POST['title'];
     $description = $_POST['description'];
