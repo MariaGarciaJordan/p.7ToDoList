@@ -186,11 +186,11 @@ body {
     text-align: center; 
     text-decoration: none; 
     display: inline-block;
-    font-size: 14px; 
-    margin: 4px 2px; 
+    font-size: 12px; 
+    margin: 2px 2px; 
     cursor: pointer; 
     border-radius: 12px; 
-    width: 140px; 
+    width: 110px; 
   }
 
   .show-todo-section button:hover {
